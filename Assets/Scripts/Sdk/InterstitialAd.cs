@@ -39,9 +39,9 @@ namespace Scripts.Sdk.InterstitialAd
             _soundMuteHandler.OnVideoOpened();
         }
 
-        private void ApplicationFocusChanged(bool Focus)
+        private void ApplicationFocusChanged(bool focus)
         {
-            if (Focus == true)
+            if (focus == true)
             {
                 _soundMuteHandler.OnVideoOpened();
             }

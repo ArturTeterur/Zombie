@@ -7,6 +7,8 @@ namespace Scripts.Sdk.Init
 {
     public class Init : MonoBehaviour
     {
+        private const string CurrentLanguage = "_currentLanguage";
+
         private int _menuSceneNumber = 1;
 
         private void Awake()
@@ -21,7 +23,7 @@ namespace Scripts.Sdk.Init
 
         private void OnInitialized()
         {
-            PlayerPrefs.SetString("_currentLanguage", YandexGamesSdk.Environment.i18n.lang);
+            PlayerPrefs.SetString(CurrentLanguage, YandexGamesSdk.Environment.i18n.lang);
             SceneManager.LoadScene(_menuSceneNumber);
         }
     }

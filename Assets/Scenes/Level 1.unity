@@ -1212,6 +1212,7 @@ MonoBehaviour:
   _buttonChartersPolice: {fileID: 5096420008148921867}
   _buttonChartersSolder: {fileID: 690122549704513620}
   _buttonChartersHero: {fileID: 8331000240270103071}
+  _currentCountCoinsPlayers: 0
 --- !u!1 &305585605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1657,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: MenuDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 8874680765382612456, guid: 258ff4f3f62cb7b4f99f86639e5aa988,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874680765735483841, guid: 258ff4f3f62cb7b4f99f86639e5aa988,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8874680765735483845, guid: 258ff4f3f62cb7b4f99f86639e5aa988,
         type: 3}
       propertyPath: _canvasAutorization
@@ -1669,6 +1680,11 @@ PrefabInstance:
     - target: {fileID: 8874680765910382512, guid: 258ff4f3f62cb7b4f99f86639e5aa988,
         type: 3}
       propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874680765910382514, guid: 258ff4f3f62cb7b4f99f86639e5aa988,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1727,7 +1743,6 @@ MonoBehaviour:
   _menuWindow: {fileID: 4286568705064520773}
   _rollButton: {fileID: 5452848470479035048}
   _levelText: {fileID: 1234357681}
-  ComponentsToDisable: []
 --- !u!4 &398236887
 Transform:
   m_ObjectHideFlags: 0
@@ -2096,6 +2111,15 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 128552532449869396, guid: 2716c57533ddc1f4db721ee2d8ca3f12,
     type: 3}
   EnemyList: []
+  _coordinateMinimalX: -3
+  _coordinateMaximalX: 3
+  _coordinateY: 0
+  _coordinateMinimalZ: -2
+  _coordinateMaximalZ: 2
+  _coordinateRotationX: 0
+  _coordinateRotationY: 180
+  _coordinateRotationZ: 0
+  _onDestroy: 0
 --- !u!4 &490342850
 Transform:
   m_ObjectHideFlags: 0
@@ -2566,7 +2590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -66.78198, y: -50}
+  m_AnchoredPosition: {x: -66.78198, y: 0}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &729698627
@@ -4364,6 +4388,14 @@ MonoBehaviour:
   - {fileID: 4040658272525723254, guid: c24b66739ad5cd94497de4cd16d4db1b, type: 3}
   - {fileID: 3376811667263069531, guid: 66c165786f1fefa40ad692819aea5dd9, type: 3}
   _knightList: []
+  _onDestroy: 0
+  _numberCharters: 0
+  _coordinateMinimalX: -3
+  _coordinateMaximalX: 3
+  _coordinateY: 0
+  _coordinateMinimalZ: -9
+  _coordinateMaximalZ: -11
+  _charaterId: 0
 --- !u!1 &1096478690
 GameObject:
   m_ObjectHideFlags: 0
@@ -4993,7 +5025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 10.251, y: -30}
+  m_AnchoredPosition: {x: 10.251, y: 0}
   m_SizeDelta: {x: 161.939, y: 35.257}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1234357683
@@ -9587,8 +9619,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 398236886}
-        m_TargetAssemblyTypeName: MenuRoll, Assembly-CSharp
-        m_MethodName: CloseMenuRoll
+        m_TargetAssemblyTypeName: Scripts.UI.MenuRoll.MenuRoll, Assembly-CSharp
+        m_MethodName: CloseMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9753,7 +9785,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0411\u0435\u0441\u043F\u043B\u0430\u0442\u043D\u043E"
+  m_text: Free
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9779dbca29d76248b9aae7848f6c867, type: 2}
   m_sharedMaterial: {fileID: -1360861724709539405, guid: a9779dbca29d76248b9aae7848f6c867,
@@ -10063,7 +10095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -36, y: -31}
+  m_AnchoredPosition: {x: -36, y: 0}
   m_SizeDelta: {x: 350, y: 110}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &2886041349085987623
@@ -11948,7 +11980,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0411\u0440\u043E\u0441\u0438\u0442\u044C \u043A\u0443\u0431\u0438\u043A"
+  m_text: "\u0411\u0440\u043E\u0441\u0438\u0442\u044C \u043A\u0443\u0431\u0438\u043A "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9779dbca29d76248b9aae7848f6c867, type: 2}
   m_sharedMaterial: {fileID: -1360861724709539405, guid: a9779dbca29d76248b9aae7848f6c867,
@@ -13557,7 +13589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.999878, y: -46}
+  m_AnchoredPosition: {x: 10.999878, y: 0}
   m_SizeDelta: {x: 198.2251, y: 320}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &7513031717525508856

@@ -1,5 +1,5 @@
 using Agava.YandexGames;
-using Scripts.Level.CoinDispley;
+using Scripts.Level.DispleyCoins;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,15 +13,16 @@ namespace Scripts.UI.MenuNextLevel
         private const string LeaderboardName = "Coins";
 
         [SerializeField] private TextMeshProUGUI _levelText;
-        [SerializeField] private CoinDispley _coinDispley;
+        [SerializeField] private DispleyCoins _coinDispley;
         [SerializeField] private Shop _shop;
         [SerializeField] private SoundMuteHandler _soundMuteHandler;
 
-        private int _menuSceneNumber = 1;
+        private int _mainMenuNumber = 1;
         private int _nextLevelNumber;
         private int _rewardWinning = 100;
         private int _rewardLosing = 10;
         private int _currentCountCoinsPlayers = 0;
+        private int _lastLevelNumber = 23;
 
         private void Start()
         {
@@ -40,13 +41,14 @@ namespace Scripts.UI.MenuNextLevel
             {
                 Leaderboard.SetScore(LeaderboardName, _currentCountCoinsPlayers += _rewardLosing);
             }
+
             PlayerPrefs.Save();
         }
 
         public void NextLevel()
         {
             _nextLevelNumber = SceneManager.GetActiveScene().buildIndex + 1;
-            if (_nextLevelNumber == 23)
+            if (_nextLevelNumber == _lastLevelNumber)
             {
                 _nextLevelNumber = SceneManager.GetActiveScene().buildIndex;
             }
@@ -64,7 +66,6 @@ namespace Scripts.UI.MenuNextLevel
 
         public void MenuWinExit()
         {
-
             _shop.ReceivingAward(_rewardWinning);
             if (PlayerAccount.IsAuthorized)
             {
@@ -72,7 +73,7 @@ namespace Scripts.UI.MenuNextLevel
             }
 
             PlayerPrefs.Save();
-            SceneManager.LoadScene(_menuSceneNumber);
+            SceneManager.LoadScene(_mainMenuNumber);
         }
 
         public void MenuWinLose()
@@ -82,7 +83,8 @@ namespace Scripts.UI.MenuNextLevel
             {
                 Leaderboard.SetScore(LeaderboardName, _currentCountCoinsPlayers += _rewardLosing);
             }
-            SceneManager.LoadScene(_menuSceneNumber);
+
+            SceneManager.LoadScene(_mainMenuNumber);
             PlayerPrefs.Save();
         }
     }

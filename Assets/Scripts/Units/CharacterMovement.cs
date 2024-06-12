@@ -1,5 +1,5 @@
-using UnityEngine;
 using Scripts.Units.State;
+using UnityEngine;
 
 namespace Scripts.Units.CharacterMovements
 {
@@ -8,10 +8,8 @@ namespace Scripts.Units.CharacterMovements
         private const string StateRun = "Run";
         private const string StateAttack = "Attack";
 
-        public abstract Vector3 Target { get; }
-
         [SerializeField] private bool _itsShooter;
-        [SerializeField] private UnitState.States _currentState;
+        [SerializeField] private States _currentState;
         [SerializeField] private Animator _animator;
         [SerializeField] private float _distanceToAttack;
         [SerializeField] private float _attackPeriod;
@@ -22,21 +20,24 @@ namespace Scripts.Units.CharacterMovements
         private int _damage = 1;
         private float _minimalAudioPitch = 0.8f;
         private float _maximalAudioPitch = 1.2f;
+        private float _effectTime = 0.8f;
         private float _timer = 0f;
+
+        public Vector3 Target { get; } = Vector3.zero;
 
         public void Start()
         {
-            SetState(UnitState.States.Walk);
+            SetState(States.Walk);
         }
 
         public void Update()
         {
             if (Target != null)
             {
-                GetClosest();
+                GetNearestEnemy();
             }
 
-            if (_currentState == UnitState.States.Walk)
+            if (_currentState == States.Walk)
             {
                 if (Target != Vector3.zero)
                 {
@@ -45,19 +46,17 @@ namespace Scripts.Units.CharacterMovements
                     float distance = Vector3.Distance(transform.position, Target);
                     if (distance <= _distanceToAttack)
                     {
-                        SetState(UnitState.States.Attack);
+                        SetState(States.Attack);
                     }
 
                     if (Target == null)
                     {
-                        _currentState = UnitState.States.Idle;
-
+                        _currentState = States.Idle;
                     }
                 }
             }
-            else if (_currentState == UnitState.States.Attack)
+            else if (_currentState == States.Attack)
             {
-
                 if (_itsShooter == true)
                 {
                     transform.LookAt(Target);
@@ -77,26 +76,26 @@ namespace Scripts.Units.CharacterMovements
                         if (_itsShooter == true)
                         {
                             _flash.SetActive(true);
-                            Invoke("HideFlash", 0.08f);
+                            Invoke("HideFlash", _effectTime);
                         }
                     }
                 }
             }
-            else if (_currentState == UnitState.States.Idle)
+            else if (_currentState == States.Idle)
             {
                 _animator.SetBool(StateRun, true);
             }
         }
 
-        public void SetState(UnitState.States state)
+        public void SetState(States state)
         {
             _currentState = state;
 
-            if (_currentState == UnitState.States.Walk)
+            if (_currentState == States.Walk)
             {
                 if (Target != Vector3.zero)
                 {
-                    GetClosest();
+                    GetNearestEnemy();
                     _navMeshAgent.SetDestination(Target);
                 }
             }
@@ -107,7 +106,8 @@ namespace Scripts.Units.CharacterMovements
             _flash.SetActive(false);
         }
 
-        public abstract void GetClosest();
+        public abstract void GetNearestEnemy();
+
         public abstract void DoDamage(int damage);
     }
 }

@@ -1,17 +1,15 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-namespace Scripts.Level.CoinDispley
+namespace Scripts.Level.DispleyCoins
 {
-    public class CoinDispley : MonoBehaviour
+    public class DispleyCoins : MonoBehaviour
     {
         private const string SaveNumberOfCoin = "_saveNumberOfCoin";
 
         [SerializeField] private TextMeshProUGUI _textCoins;
         [SerializeField] private GameObject _buttonShowAdv;
         [SerializeField] private int _numberOfCoins;
-
-        private int _saveNumberOfCoin;
 
         public int NumberOfCoins => _numberOfCoins;
 

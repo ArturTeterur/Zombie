@@ -7,12 +7,12 @@ namespace Scripts.UI.MainMenu
     {
         private const string CurrentLevel = "_currentLevel";
 
-        private int _nextLevel;
+        private int _numberNextLevel;
 
         public void NextLevel()
         {
-            _nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
-            SceneManager.LoadScene(_nextLevel);
+            _numberNextLevel = SceneManager.GetActiveScene().buildIndex + 1;
+            SceneManager.LoadScene(_numberNextLevel);
         }
 
         public void MainMenuLevel()
@@ -24,8 +24,8 @@ namespace Scripts.UI.MainMenu
             }
             else
             {
-                _nextLevel = SceneManager.GetActiveScene().buildIndex + 1;
-                SceneManager.LoadScene(_nextLevel);
+                _numberNextLevel = SceneManager.GetActiveScene().buildIndex + 1;
+                SceneManager.LoadScene(_numberNextLevel);
             }
         }
     }

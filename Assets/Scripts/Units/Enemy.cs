@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Scripts.Level.HealthBar;
 using Scripts.Units.CharacterMovements;
@@ -9,26 +10,21 @@ namespace Scripts.Units.Enemys
 {
     public class Enemy : CharacterMovement
     {
-        public override Vector3 Target => _positionKnight;
-
         [SerializeField] private Vector3 _positionKnight;
         [SerializeField] private int _health;
         [SerializeField] private int _maxHealth;
         [SerializeField] private Knight _targetKnight;
         [SerializeField] private GameObject _healthBarPrefab;
-        [SerializeField] private UnityEvent _onDied;
         [SerializeField] private List<Knight> _knight;
         [SerializeField] private GameObject _deathEffect;
 
+        private Action _onDied;
         private HealthBar _healthBar;
+        internal Action _onDead;
 
-        public event UnityAction DiedEnemy
-        {
-            add => _onDied.AddListener(value);
-            remove => _onDied.RemoveListener(value);
-        }
+        public new Vector3  Target => _positionKnight;
 
-        private void Start()
+        private new void Start()
         {
             base.Start();
             _maxHealth = _health;
@@ -37,7 +33,7 @@ namespace Scripts.Units.Enemys
             _healthBar.Setup(transform);
         }
 
-        private void Update()
+        private new void Update()
         {
             base.Update();
         }
@@ -58,15 +54,6 @@ namespace Scripts.Units.Enemys
             }
         }
 
-        private void OnDestroy()
-        {
-            if (_healthBar)
-            {
-                Destroy(_healthBar.gameObject);
-                _onDied.Invoke();
-            }
-        }
-
         public void TakeDamage(int damage)
         {
             _health -= damage;
@@ -84,7 +71,7 @@ namespace Scripts.Units.Enemys
             _targetKnight.TakeDamage(1);
         }
 
-        public override void GetClosest()
+        public override void GetNearestEnemy()
         {
             float minDistance = Mathf.Infinity;
             Knight closestUnit = null;
@@ -106,6 +93,15 @@ namespace Scripts.Units.Enemys
             {
                 _targetKnight = closestUnit;
                 _positionKnight = closestUnit.transform.position;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_healthBar)
+            {
+                Destroy(_healthBar.gameObject);
+                _onDied();
             }
         }
     }

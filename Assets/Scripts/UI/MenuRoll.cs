@@ -11,17 +11,17 @@ namespace Scripts.UI.MenuRoll
 
         private void Start()
         {
-            OpenMenuRoll();
+            OpenMenu();
         }
 
-        public void OpenMenuRoll()
+        public void OpenMenu()
         {
             _menuButton.SetActive(true);
             _menuWindow.SetActive(true);
             Time.timeScale = 0f;
         }
 
-        public void CloseMenuRoll()
+        public void CloseMenu()
         {
             _menuButton.SetActive(false);
             _menuWindow.SetActive(false);

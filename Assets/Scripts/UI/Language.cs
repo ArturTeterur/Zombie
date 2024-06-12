@@ -5,6 +5,15 @@ namespace Scripts.UI.Language
 {
     public class Language : MonoBehaviour
     {
+        private const string RussianLanguage = "Russian";
+        private const string TurkishLanguage = "Turkish";
+        private const string EnglishLanguage = "Russian";
+        private const string CurrentLanguage = "_currentLanguage";
+        private const string RussianLanguageDesignation = "ru";
+        private const string TurkishLanguageDesignation = "tr";
+        private const string EnglishLanguageDesignation = "en";
+
+
         [SerializeField] private LeanLocalization _leanLocalization;
 
         private string _language;
@@ -16,20 +25,20 @@ namespace Scripts.UI.Language
 
         private void LoadLocalization()
         {
-            _language = PlayerPrefs.GetString("_currentLanguage");
+            _language = PlayerPrefs.GetString(CurrentLanguage);
             switch (_language)
             {
-                case "ru":
-                    _leanLocalization.SetCurrentLanguage("Russian");
+                case RussianLanguageDesignation:
+                    _leanLocalization.SetCurrentLanguage(RussianLanguage);
                     break;
-                case "tr":
-                    _leanLocalization.SetCurrentLanguage("Turkish");
+                case TurkishLanguageDesignation:
+                    _leanLocalization.SetCurrentLanguage(TurkishLanguage);
                     break;
-                case "en":
-                    _leanLocalization.SetCurrentLanguage("English");
+                case EnglishLanguageDesignation:
+                    _leanLocalization.SetCurrentLanguage(EnglishLanguage);
                     break;
                 default:
-                    _leanLocalization.SetCurrentLanguage("Russian");
+                    _leanLocalization.SetCurrentLanguage(RussianLanguage);
                     break;
             }
         }
