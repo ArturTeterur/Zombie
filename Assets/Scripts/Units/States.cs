@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Scripts.Units.State
 {
      public enum States
@@ -8,5 +6,5 @@ namespace Scripts.Units.State
          Walk,
          Attack,
          Die,
-     }   
+     }
 }

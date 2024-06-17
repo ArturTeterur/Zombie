@@ -13,7 +13,6 @@ namespace Scripts.UI.Language
         private const string TurkishLanguageDesignation = "tr";
         private const string EnglishLanguageDesignation = "en";
 
-
         [SerializeField] private LeanLocalization _leanLocalization;
 
         private string _language;

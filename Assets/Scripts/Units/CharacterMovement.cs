@@ -1,5 +1,8 @@
+using System;
+using Scripts.Level.HealthBar;
 using Scripts.Units.State;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Scripts.Units.CharacterMovements
 {
@@ -16,25 +19,36 @@ namespace Scripts.Units.CharacterMovements
         [SerializeField] private GameObject _flash;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private UnityEngine.AI.NavMeshAgent _navMeshAgent;
+        [SerializeField] private int _health;
+        [SerializeField] private int _maxHealth;
+        [SerializeField] private GameObject _healthBarPrefab;
+        [SerializeField] private GameObject _deathEffect;
 
         private int _damage = 1;
         private float _minimalAudioPitch = 0.8f;
         private float _maximalAudioPitch = 1.2f;
         private float _effectTime = 0.8f;
         private float _timer = 0f;
+        private HealthBar _healthBar;
 
-        public Vector3 Target { get; } = Vector3.zero;
+        public Action OnUnitDeath;
+
+        protected Vector3 Target;
 
         public void Start()
         {
             SetState(States.Walk);
+            _maxHealth = _health;
+            GameObject healthBar = Instantiate(_healthBarPrefab);
+            _healthBar = healthBar.GetComponent<HealthBar>();
+            _healthBar.Setup(transform);
         }
 
         public void Update()
         {
             if (Target != null)
             {
-                GetNearestEnemy();
+                DetectingNearestEnemy();
             }
 
             if (_currentState == States.Walk)
@@ -87,7 +101,25 @@ namespace Scripts.Units.CharacterMovements
             }
         }
 
-        public void SetState(States state)
+        public abstract void DetectingNearestEnemy();
+
+        public abstract void DoDamage(int damage);
+
+        public void TakeDamage(int damage)
+        {
+            _health -= damage;
+            _healthBar.SetHealth(_health, _maxHealth);
+
+            if (_health <= 0)
+            {
+                Instantiate(_deathEffect, transform.position, Quaternion.identity);
+                Destroy(gameObject);
+                OnDestroy();
+                OnUnitDeath?.Invoke();
+            }
+        }
+
+        private void SetState(States state)
         {
             _currentState = state;
 
@@ -95,19 +127,23 @@ namespace Scripts.Units.CharacterMovements
             {
                 if (Target != Vector3.zero)
                 {
-                    GetNearestEnemy();
+                    DetectingNearestEnemy();
                     _navMeshAgent.SetDestination(Target);
                 }
             }
         }
 
-        public void HideFlash()
+        private void OnDestroy()
+        {
+            if (_healthBar)
+            {
+                Destroy(_healthBar.gameObject);
+            }
+        }
+
+        private void HideFlash()
         {
             _flash.SetActive(false);
         }
-
-        public abstract void GetNearestEnemy();
-
-        public abstract void DoDamage(int damage);
     }
 }

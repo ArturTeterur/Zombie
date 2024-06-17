@@ -2058,8 +2058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39053600a5636c84f8cc7352799ac33d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _menuRoll: {fileID: 8672363314595850028}
-  _menuAutorization: {fileID: 335989359}
 --- !u!4 &448159565
 Transform:
   m_ObjectHideFlags: 0
@@ -2084,7 +2082,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 490342850}
-  - component: {fileID: 490342849}
+  - component: {fileID: 490342851}
   m_Layer: 0
   m_Name: SpawnerEnemy
   m_TagString: Untagged
@@ -2092,34 +2090,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &490342849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 490342848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2784ba32ff8f1c447a204496088f7382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _textLevel: {fileID: 1234357681}
-  _menuWin: {fileID: 917701447}
-  _menulose: {fileID: 1195756694}
-  _numberEnemy: 2
-  _enemyPrefab: {fileID: 128552532449869396, guid: 2716c57533ddc1f4db721ee2d8ca3f12,
-    type: 3}
-  EnemyList: []
-  _coordinateMinimalX: -3
-  _coordinateMaximalX: 3
-  _coordinateY: 0
-  _coordinateMinimalZ: -2
-  _coordinateMaximalZ: 2
-  _coordinateRotationX: 0
-  _coordinateRotationY: 180
-  _coordinateRotationZ: 0
-  _onDestroy: 0
 --- !u!4 &490342850
 Transform:
   m_ObjectHideFlags: 0
@@ -2135,6 +2105,33 @@ Transform:
   m_Father: {fileID: 1334297412}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &490342851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490342848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03bd48c2060586d428a67caf71577a08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyPrefab: {fileID: 0}
+  _characters: []
+  _knightList: []
+  EnemyList: []
+  _dice: {fileID: 0}
+  _gameOver: {fileID: 0}
+  _itsEnemy: 0
+  _coordinateMinimalX: 0
+  _coordinateMaximalX: 0
+  _coordinateY: 0
+  _coordinateMinimalZ: 0
+  _coordinateMaximalZ: 0
+  _coordinateRotationX: 0
+  _coordinateRotationY: 0
+  _coordinateRotationZ: 0
 --- !u!1001 &583498687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4376,26 +4373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5096f6283f87b442b56e4e50f125e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _textLevel: {fileID: 1234357681}
-  _menuWin: {fileID: 917701447}
-  _menulose: {fileID: 1195756694}
-  _dice: {fileID: 8918481511839720052}
-  _characters:
-  - {fileID: 3035579857477686938, guid: d80defd7221eeef41aae086dab19eeba, type: 3}
-  - {fileID: 7809333150727534660, guid: 91066491d0d001f4ebe006f1832adc4c, type: 3}
-  - {fileID: 6595359349442796856, guid: f1af2facace9f174ba3cf8c9e824c220, type: 3}
-  - {fileID: 7896450353212694249, guid: bd8e7b6f616361149a2637a13c9b307b, type: 3}
-  - {fileID: 4040658272525723254, guid: c24b66739ad5cd94497de4cd16d4db1b, type: 3}
-  - {fileID: 3376811667263069531, guid: 66c165786f1fefa40ad692819aea5dd9, type: 3}
-  _knightList: []
-  _onDestroy: 0
-  _numberCharters: 0
-  _coordinateMinimalX: -3
-  _coordinateMaximalX: 3
-  _coordinateY: 0
-  _coordinateMinimalZ: -9
-  _coordinateMaximalZ: -11
-  _charaterId: 0
 --- !u!1 &1096478690
 GameObject:
   m_ObjectHideFlags: 0
@@ -9642,7 +9619,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 490342849}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: EnemySpawner, Assembly-CSharp
         m_MethodName: CreatEnemy
         m_Mode: 1

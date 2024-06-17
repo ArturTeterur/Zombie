@@ -51,19 +51,21 @@ public class SpawnUnits : MonoBehaviour
 
         for (int i = 0; i < _numberUnits; i++)
         {
-            Vector3 position = new Vector3(Random.Range(_coordinateMinimalX, _coordinateMaximalX),
-                _coordinateY, Random.Range(_coordinateMinimalZ, _coordinateMaximalZ));
+            float randomCoordinateX = Random.Range(_coordinateMinimalX, _coordinateMaximalX);
+            float randomCoordinateZ = Random.Range(_coordinateMinimalZ, _coordinateMaximalZ);
+
+            Vector3 position = new Vector3(randomCoordinateX, _coordinateY, randomCoordinateZ);
             if (!_itsEnemy)
             {
                 Knight newKnight = Instantiate(_characters[_charaterId], position, Quaternion.identity);
-                newKnight.onDied += OnCountDestroyedKnights;
+                newKnight.OnUnitDeath += OnCountDestroyedKnights;
                 _knightList.Add(newKnight);
             }
             else
             {
                 transform.rotation = Quaternion.Euler(_coordinateRotationX, _coordinateRotationY, _coordinateRotationZ) * transform.rotation;
                 Enemy newEnemy = Instantiate(_enemyPrefab, position, transform.rotation);
-                newEnemy._onDead += OnCountDestroyedEnemys;
+                newEnemy.OnUnitDeath += OnCountDestroyedEnemys;
                 EnemyList.Add(newEnemy);
             }
         }
@@ -72,10 +74,10 @@ public class SpawnUnits : MonoBehaviour
     private void OnDisable()
     {
         foreach (var knight in _knightList)
-            knight.onDied -= OnCountDestroyedKnights;
+            knight.OnUnitDeath -= OnCountDestroyedKnights;
 
-        foreach (var enemy in EnemyList)
-            enemy._onDead -= OnCountDestroyedEnemys;
+        foreach (var knight in _knightList)
+            knight.OnUnitDeath -= OnCountDestroyedKnights;
     }
 
     private void OnCountDestroyedEnemys()

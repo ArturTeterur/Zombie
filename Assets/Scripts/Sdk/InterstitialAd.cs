@@ -13,12 +13,12 @@ namespace Scripts.Sdk.InterstitialAd
 
         private void OnEnable()
         {
-            Application.focusChanged += ApplicationFocusChanged;
+            Application.focusChanged += OnApplicationFocusChanged;
         }
 
         private void OnDisable()
         {
-            Application.focusChanged -= ApplicationFocusChanged;
+            Application.focusChanged -= OnApplicationFocusChanged;
         }
 
         public void ShowAdv()
@@ -39,7 +39,7 @@ namespace Scripts.Sdk.InterstitialAd
             _soundMuteHandler.OnVideoOpened();
         }
 
-        private void ApplicationFocusChanged(bool focus)
+        private void OnApplicationFocusChanged(bool focus)
         {
             if (focus == true)
             {

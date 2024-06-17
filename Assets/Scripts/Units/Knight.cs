@@ -13,24 +13,14 @@ namespace Scripts.Units.Knights
         [SerializeField] private Vector3 _positionEnemy;
         [SerializeField] private Enemy _targetEnemy;
         [SerializeField] private List<Enemy> _enemyList = new List<Enemy>();
-        [SerializeField] private GameObject _healthBarPrefab;
-        [SerializeField] private GameObject _deathEffect;
-        [SerializeField] private int _health;
-        [SerializeField] private int _maxHealth;
 
-        private HealthBar _healthBar;
-        private Action _onDied;
-        public new Vector3 Target => _positionEnemy;
+        private int _damage = 1;
 
-        public Action onDied { get; internal set; }
+        protected new Vector3 Target => _positionEnemy;
 
         private new void Start()
         {
             base.Start();
-            _maxHealth = _health;
-            GameObject healthBar = Instantiate(_healthBarPrefab);
-            _healthBar = healthBar.GetComponent<HealthBar>();
-            _healthBar.Setup(transform);
         }
 
         private new void Update()
@@ -54,24 +44,12 @@ namespace Scripts.Units.Knights
             }
         }
 
-        public void TakeDamage(int damage)
-        {
-            _health -= damage;
-            _healthBar.SetHealth(_health, _maxHealth);
-
-            if (_health <= 0)
-            {
-                Instantiate(_deathEffect, transform.position, Quaternion.identity);
-                Destroy(gameObject);
-            }
-        }
-
         public override void DoDamage(int damage)
         {
-            _targetEnemy.TakeDamage(1);
+            _targetEnemy.TakeDamage(_damage);
         }
 
-        public override void GetNearestEnemy()
+        public override void DetectingNearestEnemy()
         {
             float minDistance = Mathf.Infinity;
             Enemy closestEnemy = null;
@@ -93,15 +71,6 @@ namespace Scripts.Units.Knights
             {
                 _targetEnemy = closestEnemy;
                 _positionEnemy = closestEnemy.transform.position;
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (_healthBar)
-            {
-                Destroy(_healthBar.gameObject);
-                _onDied();
             }
         }
     }

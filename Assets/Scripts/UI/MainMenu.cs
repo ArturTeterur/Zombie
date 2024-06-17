@@ -15,7 +15,7 @@ namespace Scripts.UI.MainMenu
             SceneManager.LoadScene(_numberNextLevel);
         }
 
-        public void MainMenuLevel()
+        public void StartLevel()
         {
             if (PlayerPrefs.HasKey(CurrentLevel))
             {

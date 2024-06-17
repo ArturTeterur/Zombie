@@ -1,5 +1,5 @@
 using Agava.YandexGames;
-using Scripts.Level.DispleyCoins;
+using Scripts.Level.Coins;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +13,7 @@ namespace Scripts.UI.MenuNextLevel
         private const string LeaderboardName = "Coins";
 
         [SerializeField] private TextMeshProUGUI _levelText;
-        [SerializeField] private DispleyCoins _coinDispley;
+        [SerializeField] private Coins _coinDispley;
         [SerializeField] private Shop _shop;
         [SerializeField] private SoundMuteHandler _soundMuteHandler;
 
@@ -37,12 +37,7 @@ namespace Scripts.UI.MenuNextLevel
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             PlayerPrefs.SetInt(CurrentLevel, SceneManager.GetActiveScene().buildIndex);
             _shop.ReceivingAward(_rewardLosing);
-            if (PlayerAccount.IsAuthorized)
-            {
-                Leaderboard.SetScore(LeaderboardName, _currentCountCoinsPlayers += _rewardLosing);
-            }
-
-            PlayerPrefs.Save();
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing);
         }
 
         public void NextLevel()
@@ -56,35 +51,29 @@ namespace Scripts.UI.MenuNextLevel
             PlayerPrefs.SetInt(CurrentLevel, _nextLevelNumber);
             _shop.ReceivingAward(_rewardWinning);
             SceneManager.LoadScene(_nextLevelNumber);
-            if (PlayerAccount.IsAuthorized)
-            {
-                Leaderboard.SetScore(LeaderboardName, _currentCountCoinsPlayers += _rewardWinning);
-            }
-
-            PlayerPrefs.Save();
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning);
         }
 
         public void MenuWinExit()
         {
-            _shop.ReceivingAward(_rewardWinning);
-            if (PlayerAccount.IsAuthorized)
-            {
-                Leaderboard.SetScore(LeaderboardName, _currentCountCoinsPlayers += _rewardWinning);
-            }
-
-            PlayerPrefs.Save();
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning);
             SceneManager.LoadScene(_mainMenuNumber);
         }
 
         public void MenuWinLose()
         {
-            _shop.ReceivingAward(_rewardLosing);
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing);
+            SceneManager.LoadScene(_mainMenuNumber);
+        }
+
+        private void ExitLevel(string leaderBoardName, int currentCountCoins, int reward)
+        {
+            _shop.ReceivingAward(reward);
             if (PlayerAccount.IsAuthorized)
             {
-                Leaderboard.SetScore(LeaderboardName, _currentCountCoinsPlayers += _rewardLosing);
+                Leaderboard.SetScore(leaderBoardName, currentCountCoins += reward);
             }
 
-            SceneManager.LoadScene(_mainMenuNumber);
             PlayerPrefs.Save();
         }
     }

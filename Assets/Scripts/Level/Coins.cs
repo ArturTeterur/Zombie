@@ -1,9 +1,9 @@
 using TMPro;
 using UnityEngine;
 
-namespace Scripts.Level.DispleyCoins
+namespace Scripts.Level.Coins
 {
-    public class DispleyCoins : MonoBehaviour
+    public class Coins : MonoBehaviour
     {
         private const string SaveNumberOfCoin = "_saveNumberOfCoin";
 

@@ -1,4 +1,4 @@
-using Scripts.Level.DispleyCoins;
+using Scripts.Level.Coins;
 using TMPro;
 using UnityEngine;
 
@@ -12,13 +12,13 @@ public class Shop : MonoBehaviour
     private const string CharacterSoldier = "numberSoldier";
     private const string CharacterHero = "numberHero";
 
-    [SerializeField] private DispleyCoins _coinDispley;
+    [SerializeField] private Coins _coinDispley;
     [SerializeField] private TextMeshProUGUI _textCoins;
     [SerializeField] private GameObject _buttonChartersGirl;
     [SerializeField] private GameObject _buttonChartersBoy;
     [SerializeField] private GameObject _buttonChartersPolice;
     [SerializeField] private GameObject _buttonChartersSolder;
-    [SerializeField] private GameObject _buttonChartersHero; 
+    [SerializeField] private GameObject _buttonChartersHero;
     [SerializeField] private int _currentCountCoinsPlayers = 0;
 
     private void Awake()
