@@ -58,14 +58,14 @@ public class SpawnUnits : MonoBehaviour
             if (!_itsEnemy)
             {
                 Knight newKnight = Instantiate(_characters[_charaterId], position, Quaternion.identity);
-                newKnight.OnUnitDeath += OnCountDestroyedKnights;
+                newKnight.OnDestroyHealthBar += OnCountDestroyedKnights;
                 _knightList.Add(newKnight);
             }
             else
             {
                 transform.rotation = Quaternion.Euler(_coordinateRotationX, _coordinateRotationY, _coordinateRotationZ) * transform.rotation;
                 Enemy newEnemy = Instantiate(_enemyPrefab, position, transform.rotation);
-                newEnemy.OnUnitDeath += OnCountDestroyedEnemys;
+                newEnemy.OnDestroyHealthBar += OnCountDestroyedEnemys;
                 EnemyList.Add(newEnemy);
             }
         }
@@ -74,10 +74,10 @@ public class SpawnUnits : MonoBehaviour
     private void OnDisable()
     {
         foreach (var knight in _knightList)
-            knight.OnUnitDeath -= OnCountDestroyedKnights;
+            knight.OnDestroyHealthBar -= OnCountDestroyedKnights;
 
         foreach (var knight in _knightList)
-            knight.OnUnitDeath -= OnCountDestroyedKnights;
+            knight.OnDestroyHealthBar -= OnCountDestroyedKnights;
     }
 
     private void OnCountDestroyedEnemys()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Scripts.Level.HealthBar;
 using Scripts.Units.State;
 using UnityEngine;
@@ -6,10 +7,14 @@ using Random = UnityEngine.Random;
 
 namespace Scripts.Units.CharacterMovements
 {
-    public abstract class CharacterMovement : MonoBehaviour
+    public abstract class Unit : MonoBehaviour
     {
         private const string StateRun = "Run";
         private const string StateAttack = "Attack";
+
+        public event Action OnDestroyHealthBar;
+
+        public List<Unit> UnitsList { get; set; }
 
         [SerializeField] private bool _itsShooter;
         [SerializeField] private States _currentState;
@@ -23,6 +28,8 @@ namespace Scripts.Units.CharacterMovements
         [SerializeField] private int _maxHealth;
         [SerializeField] private GameObject _healthBarPrefab;
         [SerializeField] private GameObject _deathEffect;
+        [SerializeField] private bool itsEnemy;
+        [SerializeField] private Vector3 _positionUnit;
 
         private int _damage = 1;
         private float _minimalAudioPitch = 0.8f;
@@ -31,8 +38,7 @@ namespace Scripts.Units.CharacterMovements
         private float _timer = 0f;
         private HealthBar _healthBar;
 
-        public Action OnUnitDeath;
-
+        protected Unit _targetUnit;
         protected Vector3 Target;
 
         public void Start()
@@ -48,7 +54,7 @@ namespace Scripts.Units.CharacterMovements
         {
             if (Target != null)
             {
-                DetectingNearestEnemy();
+                DetectingNearestUnit();
             }
 
             if (_currentState == States.Walk)
@@ -101,8 +107,6 @@ namespace Scripts.Units.CharacterMovements
             }
         }
 
-        public abstract void DetectingNearestEnemy();
-
         public abstract void DoDamage(int damage);
 
         public void TakeDamage(int damage)
@@ -115,7 +119,33 @@ namespace Scripts.Units.CharacterMovements
                 Instantiate(_deathEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject);
                 OnDestroy();
-                OnUnitDeath?.Invoke();
+                OnDestroyHealthBar?.Invoke();
+            }
+        }
+
+        public void DetectingNearestUnit()
+        {
+            float minDistance = Mathf.Infinity;
+
+            Unit ClosestUnit = null;
+
+            foreach (Unit unit in UnitsList)
+            {
+                if (unit != null)
+                {
+                    float distance = Vector3.Distance(transform.position, unit.transform.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        ClosestUnit = unit;
+                    }
+                }
+            }
+
+            if (ClosestUnit != null)
+            {
+                _targetUnit = ClosestUnit;
+                _positionUnit = ClosestUnit.transform.position;
             }
         }
 
@@ -127,7 +157,7 @@ namespace Scripts.Units.CharacterMovements
             {
                 if (Target != Vector3.zero)
                 {
-                    DetectingNearestEnemy();
+                    DetectingNearestUnit();
                     _navMeshAgent.SetDestination(Target);
                 }
             }

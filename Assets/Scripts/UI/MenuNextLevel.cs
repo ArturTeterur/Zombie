@@ -36,7 +36,6 @@ namespace Scripts.UI.MenuNextLevel
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             PlayerPrefs.SetInt(CurrentLevel, SceneManager.GetActiveScene().buildIndex);
-            _shop.ReceivingAward(_rewardLosing);
             ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing);
         }
 
@@ -49,7 +48,6 @@ namespace Scripts.UI.MenuNextLevel
             }
 
             PlayerPrefs.SetInt(CurrentLevel, _nextLevelNumber);
-            _shop.ReceivingAward(_rewardWinning);
             SceneManager.LoadScene(_nextLevelNumber);
             ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning);
         }
