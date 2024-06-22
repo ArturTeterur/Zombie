@@ -36,6 +36,15 @@ public class SpawnUnits : MonoBehaviour
         _onDestroyEnemys = _numberEnemy;
     }
 
+    private void OnDisable()
+    {
+        foreach (var knight in _knightList)
+            knight.OnDestroyHealthBar -= OnCountDestroyedKnights;
+
+        foreach (var knight in _knightList)
+            knight.OnDestroyHealthBar -= OnCountDestroyedKnights;
+    }
+
     public void CreatUnits()
     {
         if (!_itsEnemy)
@@ -69,15 +78,6 @@ public class SpawnUnits : MonoBehaviour
                 EnemyList.Add(newEnemy);
             }
         }
-    }
-
-    private void OnDisable()
-    {
-        foreach (var knight in _knightList)
-            knight.OnDestroyHealthBar -= OnCountDestroyedKnights;
-
-        foreach (var knight in _knightList)
-            knight.OnDestroyHealthBar -= OnCountDestroyedKnights;
     }
 
     private void OnCountDestroyedEnemys()

@@ -11,6 +11,7 @@ namespace Scripts.Units.CharacterMovements
     {
         private const string StateRun = "Run";
         private const string StateAttack = "Attack";
+        private const string TurnOffFlash = "HideFlash";
 
         public event Action OnDestroyHealthBar;
 
@@ -28,8 +29,6 @@ namespace Scripts.Units.CharacterMovements
         [SerializeField] private int _maxHealth;
         [SerializeField] private GameObject _healthBarPrefab;
         [SerializeField] private GameObject _deathEffect;
-        [SerializeField] private bool itsEnemy;
-        [SerializeField] private Vector3 _positionUnit;
 
         private int _damage = 1;
         private float _minimalAudioPitch = 0.8f;
@@ -37,9 +36,8 @@ namespace Scripts.Units.CharacterMovements
         private float _effectTime = 0.8f;
         private float _timer = 0f;
         private HealthBar _healthBar;
-
-        protected Unit _targetUnit;
-        protected Vector3 Target;
+        private Unit _targetUnit;
+        private Vector3 Target;
 
         public void Start()
         {
@@ -90,13 +88,13 @@ namespace Scripts.Units.CharacterMovements
                     if (_timer > _attackPeriod)
                     {
                         _timer = 0;
-                        DoDamage(_damage);
+                        _targetUnit.TakeDamage(_damage);
                         _audioSource.pitch = Random.Range(_minimalAudioPitch, _maximalAudioPitch);
                         _audioSource.Play();
                         if (_itsShooter == true)
                         {
                             _flash.SetActive(true);
-                            Invoke("HideFlash", _effectTime);
+                            Invoke(TurnOffFlash, _effectTime);
                         }
                     }
                 }
@@ -106,8 +104,6 @@ namespace Scripts.Units.CharacterMovements
                 _animator.SetBool(StateRun, true);
             }
         }
-
-        public abstract void DoDamage(int damage);
 
         public void TakeDamage(int damage)
         {
@@ -127,7 +123,7 @@ namespace Scripts.Units.CharacterMovements
         {
             float minDistance = Mathf.Infinity;
 
-            Unit ClosestUnit = null;
+            Unit ñlosestUnit = null;
 
             foreach (Unit unit in UnitsList)
             {
@@ -137,15 +133,14 @@ namespace Scripts.Units.CharacterMovements
                     if (distance < minDistance)
                     {
                         minDistance = distance;
-                        ClosestUnit = unit;
+                        ñlosestUnit = unit;
                     }
                 }
             }
 
-            if (ClosestUnit != null)
+            if (ñlosestUnit != null)
             {
-                _targetUnit = ClosestUnit;
-                _positionUnit = ClosestUnit.transform.position;
+                _targetUnit = ñlosestUnit;
             }
         }
 

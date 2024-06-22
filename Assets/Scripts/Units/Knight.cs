@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Scripts.Units.CharacterMovements;
 using Scripts.Units.Enemys;
 using UnityEngine;
@@ -7,11 +6,9 @@ namespace Scripts.Units.Knights
 {
     public class Knight : Unit
     {
-        private int _damage = 1;
-
         private new void Start()
         {
-            base.Start();          
+            base.Start();
         }
 
         private new void Update()
@@ -33,11 +30,6 @@ namespace Scripts.Units.Knights
             {
                 UnitsList.Remove(enemyComponent);
             }
-        }
-
-        public override void DoDamage(int damage)
-        {
-            _targetUnit.TakeDamage(_damage);
         }
     }
 }

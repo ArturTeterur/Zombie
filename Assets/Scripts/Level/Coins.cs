@@ -8,7 +8,6 @@ namespace Scripts.Level.Coins
         private const string SaveNumberOfCoin = "_saveNumberOfCoin";
 
         [SerializeField] private TextMeshProUGUI _textCoins;
-        [SerializeField] private GameObject _buttonShowAdv;
         [SerializeField] private int _numberOfCoins;
 
         public int NumberOfCoins => _numberOfCoins;

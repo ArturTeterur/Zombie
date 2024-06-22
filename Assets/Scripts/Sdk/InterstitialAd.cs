@@ -23,10 +23,10 @@ namespace Scripts.Sdk.InterstitialAd
 
         public void ShowAdv()
         {
-            Agava.YandexGames.InterstitialAd.Show(Open, Close);
+            Agava.YandexGames.InterstitialAd.Show(OnOpen, OnClose);
         }
 
-        private void Close(bool close)
+        private void OnClose(bool close)
         {
             if (close)
             {
@@ -34,7 +34,7 @@ namespace Scripts.Sdk.InterstitialAd
             }
         }
 
-        private void Open()
+        private void OnOpen()
         {
             _soundMuteHandler.OnVideoOpened();
         }

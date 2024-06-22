@@ -30,13 +30,15 @@ namespace Scripts.UI.MenuNextLevel
             {
                 _currentCountCoinsPlayers = PlayerPrefs.GetInt(SaveNumberOfCoin);
             }
+
+            PlayerPrefs.SetInt(CurrentLevel, SceneManager.GetActiveScene().buildIndex);
+            PlayerPrefs.Save();
         }
 
         public void Restart()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            PlayerPrefs.SetInt(CurrentLevel, SceneManager.GetActiveScene().buildIndex);
-            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing);
+            int currentSceneNumber = SceneManager.GetActiveScene().buildIndex;
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing, currentSceneNumber);
         }
 
         public void NextLevel()
@@ -47,32 +49,28 @@ namespace Scripts.UI.MenuNextLevel
                 _nextLevelNumber = SceneManager.GetActiveScene().buildIndex;
             }
 
-            PlayerPrefs.SetInt(CurrentLevel, _nextLevelNumber);
-            SceneManager.LoadScene(_nextLevelNumber);
-            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning);
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning, _nextLevelNumber);
         }
 
         public void MenuWinExit()
         {
-            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning);
-            SceneManager.LoadScene(_mainMenuNumber);
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardWinning, _mainMenuNumber);
         }
 
         public void MenuWinLose()
         {
-            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing);
-            SceneManager.LoadScene(_mainMenuNumber);
+            ExitLevel(LeaderboardName, _currentCountCoinsPlayers, _rewardLosing, _mainMenuNumber);
         }
 
-        private void ExitLevel(string leaderBoardName, int currentCountCoins, int reward)
+        private void ExitLevel(string leaderBoardName, int currentCountCoins, int reward, int numberNextLevel)
         {
             _shop.ReceivingAward(reward);
             if (PlayerAccount.IsAuthorized)
             {
                 Leaderboard.SetScore(leaderBoardName, currentCountCoins += reward);
             }
-
-            PlayerPrefs.Save();
+        
+            SceneManager.LoadScene(numberNextLevel);
         }
     }
 }
